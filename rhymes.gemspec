@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["rubify@softover.com"]
   s.homepage    = ""
   s.summary     = %q{Lookup perfect and identical rhymes}
-  s.description = %q{Lookup perfect and identical rhymes}}
+  s.description = %q{Lookup perfect and identical rhymes}
 
   s.rubyforge_project = "rhymes"
 
