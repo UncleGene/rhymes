@@ -37,6 +37,7 @@ module Rhymes
     end
 
     def init
+      setup unless @compiled
       if File.exists?(@compiled)
         @words, @rhymes = Marshal.load(File.open(@compiled, 'rb'){|f| f.read })
       elsif File.exists?(@raw_dict)
