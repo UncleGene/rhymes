@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Rhymes::VERSION
   s.authors     = ["Eugene Kalenkovich"]
   s.email       = ["rubify@softover.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/kalenkov/rhymes"
   s.summary     = %q{Lookup perfect and identical rhymes}
   s.description = %q{Lookup perfect and identical rhymes}
 
