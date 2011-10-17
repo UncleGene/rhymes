@@ -1,0 +1,26 @@
+= Rhymes
+Rhymes looks up perfect and identical rhymes using the Carnegie Mellon 
+Pronouncing Dictionary, or any other pronounciation dictionary with 
+compatible format.
+
+Dictionary can be downloaded from https://cmusphinx.svn.sourceforge.net/svnroot/cmusphinx/trunk/cmudict/
+(latest version - https://cmusphinx.svn.sourceforge.net/svnroot/cmusphinx/trunk/cmudict/cmudict.0.7a)
+
+== Installation
+
+  gem install rhymes
+
+== Usage
+Before first usage download and store the dictionary. Example below assumes 
+dictionary stored by default at /tmp/cmudict.0.7a. Precompiled version will be stored
+as /tmp/rhymes.dat
+  
+  require 'rhymes'
+  Rhymes.rhyme('word')
+
+== Configuration
+
+  require 'rhymes'
+  Rhymes.setup(options = {:raw_dict => '/tmp/cmudict.0.7a', :compiled => '/tmp/rhymes.dat'})
+
+    
