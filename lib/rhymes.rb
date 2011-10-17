@@ -6,14 +6,26 @@ module Rhymes
   DEFAULTS = {:raw_dict => '/tmp/cmudict.0.7a', :compiled => '/tmp/rhymes.dat'}
   
   class << self
+    ##
+    # Sets the raw dictionary location.
+    # default - /tmp/cmudict.0.7a
     attr_writer :raw_dict
-    attr_writer :compied
- 
+    ##
+    # Sets the location to store/retrieve precompiled dictionary
+    # default - /tmp/rhymes.dat 
+    attr_writer :compiled
+    
+    ##
+    # Sets up options
+    # - :raw_dict - location of raw dictionary file. Default: /tmp/cmudict.0.7a
+    # - :compiled - location to store/retrieve precompiled dictionary. Default: /tmp/rhymes.dat
     def setup(options = DEFAULTS)
       @raw_dict = options[:raw_dict] || DEFAULTS[:raw_dict]
       @compiled = options[:compiled] || DEFAULTS[:compiled]
     end
-
+    
+    ##
+    # Return the list of perfect and identical rhymes to provided word
     def rhyme(word)
       wup = word.upcase
       rhymes[words[wup]] - [wup]
