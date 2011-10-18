@@ -15,12 +15,18 @@ Before first usage download and store the dictionary. Example below assumes
 dictionary stored by default at /tmp/cmudict.0.7a. Precompiled version will be stored
 as /tmp/rhymes.dat
   
-  require 'rhymes'
-  Rhymes.rhyme('word')
+  ruby > require 'rhymes'
+  => true
+  ruby > Rhymes.rhyme('ruby')
+  => ["BOOBY", "DUBHI", "DUBY", "HRUBY", "KUBY", "LOOBY", "LUBY", "NEWBY", "RUBEY", "RUBI", "RUBIE", "SCOOBY", "TRUBEY", "TRUBY"]
 
 == Configuration
 
-  require 'rhymes'
-  Rhymes.setup(options = {:raw_dict => '/tmp/cmudict.0.7a', :compiled => '/tmp/rhymes.dat'})
+  ruby > require 'rhymes'
+  => true
+  ruby > Rhymes.setup
+  => {:raw_dict=>"/tmp/cmudict.0.7a", :compiled=>"/tmp/rhymes.dat"}
+  ruby > Rhymes.setup(:compiled=>'/new/location/file')
+  => {:raw_dict=>"/tmp/cmudict.0.7a", :compiled=>"/new/location/file"}
 
     
