@@ -1,7 +1,7 @@
 require 'rhymes/version'
 
 module Rhymes
-  DEFAULTS = {:raw_dict => '/tmp/cmudict.0.7a', :compiled => '/tmp/rhymes.dat'}
+  @@options = {:raw_dict => '/tmp/cmudict.0.7a', :compiled => '/tmp/rhymes.dat'}
   
   class << self
     ##
@@ -16,10 +16,8 @@ module Rhymes
     # Sets up options.
     # - :raw_dict - location of raw dictionary file. Default: /tmp/cmudict.0.7a
     # - :compiled - location to store/retrieve precompiled dictionary. Default: /tmp/rhymes.dat
-    def setup(options = DEFAULTS)
-      @raw_dict = options[:raw_dict] || @raw_dict || DEFAULTS[:raw_dict]
-      @compiled = options[:compiled] || @compiled || DEFAULTS[:compiled]
-      {:raw_dict => @raw_dict, :compiled => @compiled}
+    def setup(options)
+      @@options.merge!(options)
     end
     
     ##
@@ -48,12 +46,11 @@ module Rhymes
     end
 
     def init
-      setup unless @compiled && @raw_dict
-      if File.exists?(@compiled)
-        @words, @rhymes = Marshal.load(File.open(@compiled, 'rb'){|f| f.read })
+      if File.exists?(@@options[:compiled])
+        @words, @rhymes = Marshal.load(File.open(@@options[:compiled], 'rb'){|f| f.read })
       elsif File.exists?(@raw_dict)
         @words, @rhymes = {}, {}
-        File.open(@raw_dict) do |f| 
+        File.open(@@options[:raw_dict]) do |f| 
           while l = f.gets do
             next if l =~ /^[^A-Z]/ 
             word, *pron = l.strip.split(' ')
@@ -65,7 +62,7 @@ module Rhymes
           end
         end
         begin
-          File.open(@compiled, 'wb'){|f| f.write(Marshal.dump([@words, @rhymes]))}
+          File.open(@@options[:compiled], 'wb'){|f| f.write(Marshal.dump([@words, @rhymes]))}
         rescue
           # ????
         end
@@ -77,10 +74,3 @@ module Rhymes
     end
   end
 end
-
-
-if __FILE__ == $0
-  input = ARGV.empty? ? ['laughter', 'soaring', 'antelope'] : ARGV
-  input.each{|w| puts "# #{w} - #{Rhymes.rhyme(w).map(&:downcase).join(', ')}"}
-end
-
