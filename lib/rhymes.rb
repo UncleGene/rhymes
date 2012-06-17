@@ -5,14 +5,6 @@ module Rhymes
   
   class << self
     ##
-    # Sets the raw dictionary location. Default: /tmp/cmudict.0.7a
-    attr_writer :raw_dict
-    
-    ##
-    # Sets the location to store/retrieve precompiled dictionary. Default: /tmp/rhymes.dat 
-    attr_writer :compiled
-    
-    ##
     # Sets up options.
     # - :raw_dict - location of raw dictionary file. Default: /tmp/cmudict.0.7a
     # - :compiled - location to store/retrieve precompiled dictionary. Default: /tmp/rhymes.dat
@@ -48,7 +40,7 @@ module Rhymes
     def init
       if File.exists?(@@options[:compiled])
         @words, @rhymes = Marshal.load(File.open(@@options[:compiled], 'rb'){|f| f.read })
-      elsif File.exists?(@raw_dict)
+      elsif File.exists?(@@options[:raw_dict])
         @words, @rhymes = {}, {}
         File.open(@@options[:raw_dict]) do |f| 
           while l = f.gets do
@@ -67,7 +59,7 @@ module Rhymes
           # ????
         end
       else
-        raise "File #{@data_dir + RAW} does not exist. You can download latest dictionary " +
+        raise "File #{@@options[:raw_dict]} does not exist. You can download latest dictionary " +
               "from https://cmusphinx.svn.sourceforge.net/svnroot/cmusphinx/trunk/cmudict and provide "
               "file location with Rhymes.setup(:raw_dict => file_full_path) (/tmp/cmudict.0.7a by default)"
       end
