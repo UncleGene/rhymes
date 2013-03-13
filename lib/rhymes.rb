@@ -17,7 +17,7 @@ module Rhymes
     def setup(opts = {})
       opts.each{ |k, v| options[k]  = v }
       yield options if block_given?
-      options
+      Hash[options.each_pair.to_a]
     end
     
     ##

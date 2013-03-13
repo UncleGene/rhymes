@@ -1,24 +1,20 @@
 require 'spec_helper'
 
 describe Rhymes do
-  before(:all) do
+  before do
     @sample = File.join(File.dirname(__FILE__), 'sample_raw.txt')
-    Rhymes.setup(:raw_dict => @sample)
+    Rhymes.setup(:raw_dict => @sample, :compiled => '')
   end
   
   it 'should save provided option' do
-    Rhymes.setup(:compiled => '/tmp/sample').tap do |opts|
-      opts.raw_dict.should == @sample
-      opts.compiled.should == '/tmp/sample'
-    end
+    Rhymes.setup(:compiled => '/tmp/sample').should == {:raw_dict => @sample, :compiled => '/tmp/sample'}
   end
 
   it 'should save block config' do
     Rhymes.setup do |config|
       config.raw_dict = 'foo'
-    end.tap do |opts|
-      opts.raw_dict.should == 'foo'
-    end
+      config.compiled = 'bar'
+    end.should == {:raw_dict => 'foo', :compiled => 'bar'}
   end
 
   it 'should rhyme ruby with newby and scooby' do

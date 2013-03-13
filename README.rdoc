@@ -26,7 +26,9 @@ as /tmp/rhymes.dat
   => true
   ruby > Rhymes.setup
   => {:raw_dict=>"/tmp/cmudict.0.7a", :compiled=>"/tmp/rhymes.dat"}
-  ruby > Rhymes.setup(:compiled=>'/new/location/file')
+  ruby > Rhymes.setup(:compiled => '/new/location/file')
   => {:raw_dict=>"/tmp/cmudict.0.7a", :compiled=>"/new/location/file"}
-
+  ruby > Rhymes.setup{|c| c.raw_dict = '/new/raw/dict'}
+   => {:raw_dict=>"/new/raw/dict", :compiled=>"/new/location/file"}
     
+Note that after the first successful call to Rhymes.rhyme all data is in memory and setup does not affect anything
