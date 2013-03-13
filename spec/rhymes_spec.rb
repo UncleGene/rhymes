@@ -7,10 +7,20 @@ describe Rhymes do
   end
   
   it 'should save provided option' do
-    Rhymes.setup(:compiled => '/tmp/sample').should == 
-      {:raw_dict => @sample, :compiled => '/tmp/sample'}
+    Rhymes.setup(:compiled => '/tmp/sample').tap do |opts|
+      opts.raw_dict.should == @sample
+      opts.compiled.should == '/tmp/sample'
+    end
   end
-  
+
+  it 'should save block config' do
+    Rhymes.setup do |config|
+      config.raw_dict = 'foo'
+    end.tap do |opts|
+      opts.raw_dict.should == 'foo'
+    end
+  end
+
   it 'should rhyme ruby with newby and scooby' do
     Rhymes.rhyme('ruby').should == ['NEWBY', 'SCOOBY']
     Rhymes.rhyme('Scooby').should == ['NEWBY', 'RUBY']
@@ -32,8 +42,8 @@ describe Rhymes do
     Rhymes.rhyme('USA').should == ['MONTERREY']
   end
 
-  it 'should rhyme nothing with unknown word' do
-    Rhymes.rhyme('dabadabadaba').should == []
+  it 'should raise with unknown word' do
+    expect {Rhymes.rhyme('dabadabadaba')}.to raise_error(Rhymes::UnknownWord)
   end
 
- end
+end
