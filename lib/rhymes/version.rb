@@ -1,3 +1,3 @@
-module Rhymes
-  VERSION = "0.1.0"
+class Rhymes
+  VERSION = "1.0.0"
 end
