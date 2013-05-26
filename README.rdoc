@@ -1,35 +1,23 @@
 {<img src="https://codeclimate.com/github/kalenkov/rhymes.png" />}[https://codeclimate.com/github/kalenkov/rhymes]
 = Rhymes
-Rhymes looks up perfect and identical rhymes using the Carnegie Mellon 
-Pronouncing Dictionary, or any other pronounciation dictionary with 
-compatible format.
-
-Dictionary can be downloaded from https://cmusphinx.svn.sourceforge.net/svnroot/cmusphinx/trunk/cmudict/
-(latest version - https://cmusphinx.svn.sourceforge.net/svnroot/cmusphinx/trunk/cmudict/cmudict.0.7a)
+Rhymes looks up perfect and identical rhymes using precompiled version of the Carnegie Mellon 
+Pronouncing Dictionary.
 
 == Installation
 
   gem install rhymes
 
 == Usage
-Before first usage download and store the dictionary. Example below assumes 
-dictionary stored by default at /tmp/cmudict.0.7a. Precompiled version will be stored
-as /tmp/rhymes.dat
   
   ruby > require 'rhymes'
   => true
   ruby > Rhymes.rhyme('ruby')
   => ["BOOBY", "DUBHI", "DUBY", "HRUBY", "KUBY", "LOOBY", "LUBY", "NEWBY", "RUBEY", "RUBI", "RUBIE", "SCOOBY", "TRUBEY", "TRUBY"]
 
-== Configuration
+Class method will load dictionary on each call. Use instance method to front-load the expense
 
   ruby > require 'rhymes'
   => true
-  ruby > Rhymes.setup
-  => {:raw_dict=>"/tmp/cmudict.0.7a", :compiled=>"/tmp/rhymes.dat"}
-  ruby > Rhymes.setup(:compiled => '/new/location/file')
-  => {:raw_dict=>"/tmp/cmudict.0.7a", :compiled=>"/new/location/file"}
-  ruby > Rhymes.setup{|c| c.raw_dict = '/new/raw/dict'}
-   => {:raw_dict=>"/new/raw/dict", :compiled=>"/new/location/file"}
-    
-Note that after the first successful call to Rhymes.rhyme all data is in memory and setup does not affect anything
+  ruby > rhymes = Rhymes.new; rhymes.rhyme('ruby')
+  => ["BOOBY", "DUBHI", "DUBY", "HRUBY", "KUBY", "LOOBY", "LUBY", "NEWBY", "RUBEY", "RUBI", "RUBIE", "SCOOBY", "TRUBEY", "TRUBY"]
+
